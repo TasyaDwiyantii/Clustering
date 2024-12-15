@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Clustering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #F4DFF7, #E2CCE8);
+            color: #4A3C6C;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: #6F42C1;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 30px;
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Form Styling */
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #F9F5FB;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            font-size: 1rem;
+            color: #6F42C1;
+            font-weight: 500;
+        }
+
+        form input, button {
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #DDD;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        form input:focus {
+            outline: none;
+            border-color: #6F42C1;
+            box-shadow: 0 0 4px rgba(111, 66, 193, 0.4);
+        }
+
+        button {
+            background-color: #6F42C1;
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #5C3E98;
+            transform: scale(1.05);
+        }
+
+        /* Images Section */
+        .images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .image-container {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .label {
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6F42C1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            form input, form button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Clustering</h1>
+    <div class="container">
+        <!-- Form Section -->
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="file">Upload Image:</label>
+            <input type="file" name="file" accept="image/*" required>
+
+            <label for="n_clusters">Number of Clusters:</label>
+            <input type="number" name="n_clusters">
+
+            <button type="submit">Process Image</button>
+        </form>
+
+        <!-- Display Images Section -->
+        {% if original_image and segmented_image %}
+        <div class="images">
+            <div class="image-container">
+                <img src="{{ original_image }}" alt="Original Image">
+                <div class="label">Original Image</div>
+            </div>
+            <div class="image-container">
+                <img src="{{ segmented_image }}" alt="Segmented Image">
+                <div class="label">Segmented Image ({{ n_clusters }} Clusters)</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
